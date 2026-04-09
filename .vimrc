@@ -1,3 +1,5 @@
+
+
 " ===== 基本設定 =====
 set number          " 行番号表示
 set cursorline      " カーソル行をハイライト
@@ -18,6 +20,13 @@ autocmd BufNewFile,BufRead *.tf set filetype=terraform
 
 " .terraform/や.tfstateを補完・検索から除外
 set wildignore+=*/.terraform/*,*.tfstate,*.tfstate.backup
+
+" vim-plugがインストールされていない場合に自動インストール
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " ===== プラグイン =====
 call plug#begin('~/.vim/plugged')
